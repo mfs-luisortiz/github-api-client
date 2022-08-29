@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:github_api_client/services/github_service.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
   GithubApiClientService apiClientService = GithubApiClientService();
 
@@ -32,10 +32,10 @@ class HomeScreen extends StatelessWidget {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
-                      itemCount: snapshot.data.length,
+                      itemCount: snapshot.data?.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          title: Text(snapshot.data[index]),
+                          title: Text(snapshot.data?[index]),
                         );
                       },
                     );
@@ -52,9 +52,9 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Timer _debounce;
+  Timer? _debounce;
   _onSearchChanged(String query) {
-    if (_debounce?.isActive ?? false) _debounce.cancel();
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 1000), () {
       if (query.isNotEmpty) {
         apiClientService.getRepositories(query);
